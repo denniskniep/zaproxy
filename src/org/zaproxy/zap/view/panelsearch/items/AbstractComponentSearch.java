@@ -15,8 +15,13 @@ public abstract class AbstractComponentSearch<T> implements ComponentSearch, Com
     }
 
     @Override
+    public boolean isResponsible(Object component){
+        return componentType.isInstance(component);
+    }
+
+    @Override
     public boolean isSearchMatching(Object component, SearchQuery query) {
-        if(componentType.isInstance(component)){
+        if(isResponsible(component)){
             return isSearchMatchingInternal((T)component, query);
         }
         return false;
@@ -24,7 +29,7 @@ public abstract class AbstractComponentSearch<T> implements ComponentSearch, Com
 
     @Override
     public Object[] getComponents(Object component) {
-        if(componentType.isInstance(component)){
+        if(isResponsible(component)){
             return getComponentsInternal((T)component);
         }
         return new Component[]{};
@@ -32,7 +37,7 @@ public abstract class AbstractComponentSearch<T> implements ComponentSearch, Com
 
     @Override
     public HighlightedComponent highlight(Object component){
-        if(componentType.isInstance(component)){
+        if(isResponsible(component)){
             return highlightInternal((T)component);
         }
         return null;
@@ -40,7 +45,7 @@ public abstract class AbstractComponentSearch<T> implements ComponentSearch, Com
 
     @Override
     public HighlightedComponent highlightAsParent(Object component){
-        if(componentType.isInstance(component)){
+        if(isResponsible(component)){
             return highlightAsParentInternal((T)component);
         }
         return null;
@@ -48,19 +53,21 @@ public abstract class AbstractComponentSearch<T> implements ComponentSearch, Com
 
     @Override
     public void undoHighlight(HighlightedComponent highlightedComponent) {
-        if(componentType.isInstance(highlightedComponent.getComponent())){
+        if(isResponsible(highlightedComponent.getComponent())){
             undoHighlightInternal(highlightedComponent, (T)highlightedComponent.getComponent());
         }
     }
 
     @Override
     public void undoHighlightAsParent(HighlightedComponent highlightedParentComponent) {
-        if(componentType.isInstance(highlightedParentComponent.getComponent())){
+        if(isResponsible(highlightedParentComponent.getComponent())){
             undoHighlightAsParentInternal(highlightedParentComponent, (T)highlightedParentComponent.getComponent());
         }
     }
 
-    protected abstract boolean isSearchMatchingInternal(T component, SearchQuery query);
+    protected boolean isSearchMatchingInternal(T component, SearchQuery query){
+        return false;
+    }
 
     protected Object[] getComponentsInternal(T component){
         return new Object[]{};

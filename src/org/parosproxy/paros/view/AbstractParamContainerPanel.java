@@ -180,7 +180,7 @@ public class AbstractParamContainerPanel extends JSplitPane {
      *
      * @return javax.swing.JTree
      */
-    private JTree getTreeParam() {
+    public JTree getTreeParam() {
         if (treeParam == null) {
             treeParam = new JTree();
             treeParam.setModel(getTreeModel());
@@ -469,12 +469,16 @@ public class AbstractParamContainerPanel extends JSplitPane {
         }
 
         // exit if panel name not found. 
-        AbstractParamPanel panel = tablePanel.get(name);
+        AbstractParamPanel panel = getParamPanel(name);
         if (panel == null) {
             return;
         }
 
         showParamPanel(panel, name);
+    }
+
+    public AbstractParamPanel getParamPanel(String name){
+        return tablePanel.get(name);
     }
 
     /**

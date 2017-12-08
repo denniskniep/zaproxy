@@ -25,8 +25,6 @@ public class FoundComponent{
         return Generic.cast(component);
     }
 
-
-
     public ComponentSearch getFoundBy() {
         return foundBy;
     }

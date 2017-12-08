@@ -3,7 +3,7 @@ package org.zaproxy.zap.view.panelsearch;
 import org.zaproxy.zap.view.panelsearch.items.ButtonSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComponentHighlighter;
 import org.zaproxy.zap.view.panelsearch.items.LabelSearch;
-import org.zaproxy.zap.view.panelsearch.items.TreeNodeSearch;
+import org.zaproxy.zap.view.panelsearch.items.TreeNodeElementSearch;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ public class Highlighter {
 
     private static final List<ComponentHighlighter> componentHighlighterItems = Arrays.asList(
             new ButtonSearch(),
-            new TreeNodeSearch(),
+            new TreeNodeElementSearch(),
             new LabelSearch()
     );
 
@@ -22,22 +22,32 @@ public class Highlighter {
         ArrayList<HighlightedComponent> highlightedParentComponents = new ArrayList<>();
 
         for (FoundComponent foundComponent : foundComponents){
-            for (ComponentHighlighter componentHighlighter : componentHighlighterItems){
-                HighlightedComponent highlightedComponent = componentHighlighter.highlight(foundComponent.getComponent());
-                if(highlightedComponent != null){
-                    highlightedComponents.add(highlightedComponent);
-                }
-
-                for (Object parentComponent : foundComponent.getParents()){
-                    HighlightedComponent highlightedParentComponent = componentHighlighter.highlightAsParent(parentComponent);
-                    if(highlightedParentComponent != null){
-                        highlightedParentComponents.add(highlightedParentComponent);
-                    }
-                }
-            }
+            highlightedComponents.addAll(highlightComponents(Arrays.asList(foundComponent.getComponent())));
+            highlightedParentComponents.addAll(highlightComponents(foundComponent.getParents()));
         }
 
         return new HighlighterResult(highlightedComponents, highlightedParentComponents);
+    }
+
+    private ArrayList<HighlightedComponent> highlightComponents(List<Object> components){
+        ArrayList<HighlightedComponent> highlightedComponents = new ArrayList<>();
+        for (Object component : components){
+            HighlightedComponent highlightedComponent = highlightComponent(component);
+            if(highlightedComponent != null){
+                highlightedComponents.add(highlightedComponent);
+            }
+        }
+        return highlightedComponents;
+    }
+
+    private HighlightedComponent highlightComponent(Object component){
+        for (ComponentHighlighter componentHighlighter : componentHighlighterItems){
+            HighlightedComponent highlightedComponent = componentHighlighter.highlight(component);
+            if(highlightedComponent != null) {
+                return highlightedComponent;
+            }
+        }
+        return null;
     }
 
     public void undoHighlight(HighlighterResult highlighterResult){

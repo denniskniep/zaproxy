@@ -4,6 +4,7 @@ import org.zaproxy.zap.view.panelsearch.HighlightedComponent;
 import org.zaproxy.zap.view.panelsearch.SearchQuery;
 
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Component;
