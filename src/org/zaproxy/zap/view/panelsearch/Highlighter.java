@@ -8,6 +8,9 @@ import org.zaproxy.zap.view.panelsearch.items.TreeNodeElementSearch;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Highlighter {
 
@@ -22,17 +25,17 @@ public class Highlighter {
         ArrayList<HighlightedComponent> highlightedParentComponents = new ArrayList<>();
 
         for (FoundComponent foundComponent : foundComponents){
-            highlightedComponents.addAll(highlightComponents(Arrays.asList(foundComponent.getComponent())));
-            highlightedParentComponents.addAll(highlightComponents(foundComponent.getParents()));
+            highlightedComponents.addAll(highlightComponents(Arrays.asList(foundComponent.getComponent()), (h, c) -> h.highlight(c)));
+            highlightedParentComponents.addAll(highlightComponents(foundComponent.getParents(), (h, c) -> h.highlightAsParent(c)));
         }
 
         return new HighlighterResult(highlightedComponents, highlightedParentComponents);
     }
 
-    private ArrayList<HighlightedComponent> highlightComponents(List<Object> components){
+    private ArrayList<HighlightedComponent> highlightComponents(List<Object> components,  BiFunction<ComponentHighlighter, Object, HighlightedComponent> highlightAction){
         ArrayList<HighlightedComponent> highlightedComponents = new ArrayList<>();
         for (Object component : components){
-            HighlightedComponent highlightedComponent = highlightComponent(component);
+            HighlightedComponent highlightedComponent = highlightComponent(component, highlightAction);
             if(highlightedComponent != null){
                 highlightedComponents.add(highlightedComponent);
             }
@@ -40,9 +43,9 @@ public class Highlighter {
         return highlightedComponents;
     }
 
-    private HighlightedComponent highlightComponent(Object component){
+    private HighlightedComponent highlightComponent(Object component, BiFunction<ComponentHighlighter, Object, HighlightedComponent> highlightAction){
         for (ComponentHighlighter componentHighlighter : componentHighlighterItems){
-            HighlightedComponent highlightedComponent = componentHighlighter.highlight(component);
+            HighlightedComponent highlightedComponent = highlightAction.apply(componentHighlighter, component);
             if(highlightedComponent != null) {
                 return highlightedComponent;
             }

@@ -4,6 +4,8 @@ import org.parosproxy.paros.view.AbstractParamContainerPanel;
 import org.parosproxy.paros.view.AbstractParamPanel;
 
 import java.util.ArrayList;
+import java.util.Collection;
+
 
 public class AbstractParamContainerPanelSearch extends  AbstractComponentSearch<AbstractParamContainerPanel> {
 
