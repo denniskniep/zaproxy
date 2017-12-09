@@ -7,11 +7,13 @@ public class TableCellElement {
     private Object value;
     private JTable table;
     private Object columnIdentifier;
+    private int columnIndex;
     private int rowIndex;
 
-    public TableCellElement(JTable table, Object columnIdentifier, int rowIndex, Object value) {
+    public TableCellElement(JTable table, Object columnIdentifier, int columnIndex, int rowIndex, Object value) {
         this.table = table;
         this.columnIdentifier = columnIdentifier;
+        this.columnIndex = columnIndex;
         this.rowIndex = rowIndex;
         this.value = value;
     }
@@ -30,5 +32,9 @@ public class TableCellElement {
 
     public int getRowIndex() {
         return rowIndex;
+    }
+
+    public int getColumnIndex() {
+        return columnIndex;
     }
 }

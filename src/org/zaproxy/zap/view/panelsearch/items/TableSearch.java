@@ -12,7 +12,7 @@ public class TableSearch extends AbstractComponentSearch<JTable>  {
             for (int cIndex = 0; cIndex < component.getColumnCount(); cIndex++) {
                 Object cellValue = component.getModel().getValueAt(rIndex, cIndex);
                 Object columnIdentifier = component.getColumnModel().getColumn(cIndex).getIdentifier();
-                elements.add(new TableCellElement(component, columnIdentifier, rIndex, cellValue));
+                elements.add(new TableCellElement(component, columnIdentifier, cIndex, rIndex, cellValue));
             }
         }
 
