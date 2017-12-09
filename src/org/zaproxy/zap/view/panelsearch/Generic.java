@@ -1,4 +1,4 @@
-package org.zaproxy.zap.view.panelsearch.items;
+package org.zaproxy.zap.view.panelsearch;
 
 public final class Generic {
 

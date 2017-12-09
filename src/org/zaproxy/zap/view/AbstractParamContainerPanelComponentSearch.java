@@ -20,7 +20,6 @@ public class AbstractParamContainerPanelComponentSearch extends AbstractComponen
         // The name of the panel is the name of the Node
 
         TreeSearch search = new TreeSearch();
-        //ToDo: Respect Hierarchy
         ArrayList<TreeNodeElement> treeNodeElements = search.getTreeNodeElement(component.getTreeParam());
         for (TreeNodeElement treeNodeElement : treeNodeElements){
             AbstractParamPanel panel = component.getParamPanel(treeNodeElement.getNode().toString());

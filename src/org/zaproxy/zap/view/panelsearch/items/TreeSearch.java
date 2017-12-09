@@ -11,17 +11,30 @@ public class TreeSearch extends AbstractComponentSearch<JTree> {
     }
 
     public ArrayList<TreeNodeElement> getTreeNodeElement(JTree component){
-        ArrayList<TreeNodeElement> elements = new ArrayList<>();
-        //ToDo: Respect Hierarchy
         Object rootNode = component.getModel().getRoot();
-        int childCount = component.getModel().getChildCount(rootNode);
+        return getTreeNodeElementRecursive(component, rootNode);
+    }
+
+    private ArrayList<TreeNodeElement> getTreeNodeElementRecursive(JTree tree, Object node) {
+        ArrayList<TreeNodeElement> elements = new ArrayList<>();
+        elements.add(new TreeNodeElement(node, tree));
+
+        for(Object childNodes : getChildNodes(tree, node)){
+            elements.addAll(getTreeNodeElementRecursive(tree, childNodes));
+        }
+        return elements;
+    }
+
+    private ArrayList<Object> getChildNodes(JTree tree, Object node){
+        ArrayList<Object> nodes = new ArrayList<>();
+        int childCount = tree.getModel().getChildCount(node);
 
         for (int i = 0; i < childCount; i++) {
-            Object child = component.getModel().getChild(rootNode, i);
-            elements.add(new TreeNodeElement(child, component));
+            Object child = tree.getModel().getChild(node, i);
+            nodes.add(child);
         }
 
-        return elements;
+        return nodes;
     }
 }
 

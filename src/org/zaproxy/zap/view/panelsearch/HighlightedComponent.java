@@ -1,7 +1,5 @@
 package org.zaproxy.zap.view.panelsearch;
 
-import org.zaproxy.zap.view.panelsearch.items.Generic;
-
 import java.util.HashMap;
 import java.util.Map;
 
