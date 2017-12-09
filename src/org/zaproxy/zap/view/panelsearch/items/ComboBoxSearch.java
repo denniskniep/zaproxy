@@ -1,18 +1,13 @@
 package org.zaproxy.zap.view.panelsearch.items;
 
 import org.zaproxy.zap.view.panelsearch.HighlightedComponent;
+import org.zaproxy.zap.view.panelsearch.HighlighterUtils;
 import org.zaproxy.zap.view.panelsearch.SearchQuery;
 
-import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
-import java.awt.Color;
 import java.util.ArrayList;
 
 public class ComboBoxSearch extends AbstractComponentSearch<JComboBox> {
-
-    private static final String BORDER = "Border";
-    private static final String OPAQUE = "Opaque";
-    private static final String BACKGROUND = "Background";
 
     @Override
     protected boolean isSearchMatchingInternal(JComboBox component, SearchQuery query) {
@@ -25,20 +20,12 @@ public class ComboBoxSearch extends AbstractComponentSearch<JComboBox> {
 
     @Override
     protected HighlightedComponent highlightInternal(JComboBox component) {
-        HighlightedComponent highlightedComponent = new HighlightedComponent(component);
-        highlightedComponent.put(OPAQUE, component.isOpaque());
-        highlightedComponent.put(BACKGROUND, component.getBackground());
-
-        component.setOpaque(true);
-        component.setBackground(new Color(255, 204, 0));
-
-        return highlightedComponent;
+        return HighlighterUtils.highlightBackground(component, HighlighterUtils.DefaultHighlightColor);
     }
 
     @Override
     protected void undoHighlightInternal(HighlightedComponent highlightedComponent, JComboBox component) {
-        component.setOpaque(highlightedComponent.get(OPAQUE));
-        component.setBackground(highlightedComponent.get(BACKGROUND));
+        HighlighterUtils.undoHighlightBackground(highlightedComponent);
     }
 
     @Override
@@ -53,15 +40,12 @@ public class ComboBoxSearch extends AbstractComponentSearch<JComboBox> {
 
     @Override
     protected HighlightedComponent highlightAsParentInternal(JComboBox component) {
-        HighlightedComponent highlightedComponent = new HighlightedComponent(component);
-        highlightedComponent.put(BORDER, component.getBorder());
-        component.setBorder(BorderFactory.createLineBorder(new Color(255, 204, 0)));
-        return highlightedComponent;
+        return HighlighterUtils.highlightBorder(component, HighlighterUtils.DefaultHighlightColor);
     }
 
     @Override
     protected void undoHighlightAsParentInternal(HighlightedComponent highlightedComponent, JComboBox component) {
-        component.setBorder(highlightedComponent.get(BORDER));
+        HighlighterUtils.undoHighlightBorder(highlightedComponent);
     }
 
 }

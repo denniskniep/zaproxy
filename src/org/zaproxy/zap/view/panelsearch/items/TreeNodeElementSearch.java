@@ -1,6 +1,7 @@
 package org.zaproxy.zap.view.panelsearch.items;
 
 import org.zaproxy.zap.view.panelsearch.HighlightedComponent;
+import org.zaproxy.zap.view.panelsearch.HighlighterUtils;
 import org.zaproxy.zap.view.panelsearch.SearchQuery;
 
 import javax.swing.BorderFactory;
@@ -91,10 +92,10 @@ public class TreeNodeElementSearch extends AbstractComponentSearch<TreeNodeEleme
             if(highlightedNodes.contains(value)){
                 trySetOpaque(cell, true);
                 trySetBorder(cell, null);
-                cell.setBackground(new Color(255, 204, 0));
+                cell.setBackground(HighlighterUtils.DefaultHighlightColor);
             }else if(highlightedParentNodes.contains(value)){
                 trySetOpaque(cell, false);
-                trySetBorder(cell, new Color(255, 204, 0));
+                trySetBorder(cell, HighlighterUtils.DefaultHighlightColor);
                 cell.setBackground(null);
             }
             else{
