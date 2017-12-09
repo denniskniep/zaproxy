@@ -1,6 +1,8 @@
 package org.zaproxy.zap.view.panelsearch;
 
 import org.zaproxy.zap.view.panelsearch.items.ButtonSearch;
+import org.zaproxy.zap.view.panelsearch.items.ComboBoxElementSearch;
+import org.zaproxy.zap.view.panelsearch.items.ComboBoxSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComponentHighlighter;
 import org.zaproxy.zap.view.panelsearch.items.LabelSearch;
 import org.zaproxy.zap.view.panelsearch.items.TreeNodeElementSearch;
@@ -17,7 +19,9 @@ public class Highlighter {
     public static final List<ComponentHighlighter> DefaultComponentHighlighterItems = Arrays.asList(
             new ButtonSearch(),
             new TreeNodeElementSearch(),
-            new LabelSearch()
+            new LabelSearch(),
+            new ComboBoxSearch(),
+            new ComboBoxElementSearch()
     );
 
     private final List<ComponentHighlighter> componentHighlighterItems;

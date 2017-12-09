@@ -1,6 +1,8 @@
 package org.zaproxy.zap.view.panelsearch;
 
 import org.zaproxy.zap.view.panelsearch.items.ButtonSearch;
+import org.zaproxy.zap.view.panelsearch.items.ComboBoxElementSearch;
+import org.zaproxy.zap.view.panelsearch.items.ComboBoxSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComponentSearch;
 import org.zaproxy.zap.view.panelsearch.items.ContainerSearch;
 import org.zaproxy.zap.view.panelsearch.items.LabelSearch;
@@ -19,6 +21,8 @@ public class Search {
             new ButtonSearch(),
             new TreeNodeElementSearch(),
             new LabelSearch(),
+            new ComboBoxSearch(),
+            new ComboBoxElementSearch(),
             new ContainerSearch() //Must be the last item, because it fits all!
     );
 

@@ -5,6 +5,7 @@ import org.zaproxy.zap.view.panelsearch.SearchQuery;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Component;
@@ -20,8 +21,8 @@ public class LabelSearch extends AbstractComponentSearch<JLabel> {
     }
 
     @Override
-    protected Component[] getComponentsInternal(JLabel component) {
-        return new Component[]{};
+    protected Object[] getComponentsInternal(JLabel component) {
+        return new Object[]{};
     }
 
     @Override
