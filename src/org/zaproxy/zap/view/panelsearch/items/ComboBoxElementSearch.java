@@ -30,19 +30,28 @@ public class ComboBoxElementSearch extends AbstractComponentSearch<ComboBoxEleme
     }
 
     private HighlightComboBoxItemRenderer wrapComboBoxItemRenderer(ComboBoxElement component){
-        if(!(component.getComboBox().getRenderer() instanceof ComboBoxElementSearch.HighlightComboBoxItemRenderer)){
-            ListCellRenderer currentRenderer = component.getComboBox().getRenderer();
-            component.getComboBox().setRenderer(new HighlightComboBoxItemRenderer(currentRenderer));
+        if(!(getRenderer(component) instanceof HighlightComboBoxItemRenderer)){
+            ListCellRenderer currentRenderer = getRenderer(component);
+            setRenderer(component, new HighlightComboBoxItemRenderer(currentRenderer));
         }
-        return (HighlightComboBoxItemRenderer)component.getComboBox().getRenderer();
+        return (HighlightComboBoxItemRenderer) getRenderer(component);
     }
 
     private void revertWrappedComboBoxItemRenderer(ComboBoxElement component){
-        if(component.getComboBox().getRenderer() instanceof HighlightComboBoxItemRenderer){
-            HighlightComboBoxItemRenderer highlightRenderer = (HighlightComboBoxItemRenderer)component.getComboBox().getRenderer();
-            component.getComboBox().setRenderer(highlightRenderer.getOriginalRenderer());
+        if(getRenderer(component) instanceof HighlightComboBoxItemRenderer){
+            HighlightComboBoxItemRenderer highlightRenderer = (HighlightComboBoxItemRenderer) getRenderer(component);
+            setRenderer(component, highlightRenderer.getOriginalRenderer());
         }
     }
+
+    private ListCellRenderer getRenderer(ComboBoxElement component) {
+        return component.getComboBox().getRenderer();
+    }
+
+    private void setRenderer(ComboBoxElement component, ListCellRenderer renderer){
+        component.getComboBox().setRenderer(renderer);
+    }
+
 
     public static class HighlightComboBoxItemRenderer implements ListCellRenderer<Object> {
 

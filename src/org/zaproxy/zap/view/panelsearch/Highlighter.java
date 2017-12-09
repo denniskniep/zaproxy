@@ -4,6 +4,8 @@ import org.zaproxy.zap.view.panelsearch.items.ButtonSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComboBoxElementSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComboBoxSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComponentHighlighter;
+import org.zaproxy.zap.view.panelsearch.items.TableCellElementSearch;
+import org.zaproxy.zap.view.panelsearch.items.TableSearch;
 import org.zaproxy.zap.view.panelsearch.items.LabelSearch;
 import org.zaproxy.zap.view.panelsearch.items.TreeNodeElementSearch;
 
@@ -11,8 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiFunction;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 public class Highlighter {
 
@@ -21,7 +21,9 @@ public class Highlighter {
             new TreeNodeElementSearch(),
             new LabelSearch(),
             new ComboBoxSearch(),
-            new ComboBoxElementSearch()
+            new ComboBoxElementSearch(),
+            new TableSearch(),
+            new TableCellElementSearch()
     );
 
     private final List<ComponentHighlighter> componentHighlighterItems;
