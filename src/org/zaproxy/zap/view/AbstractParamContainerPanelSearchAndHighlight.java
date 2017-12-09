@@ -8,6 +8,7 @@ import org.zaproxy.zap.view.panelsearch.InStringSearchQuery;
 import org.zaproxy.zap.view.panelsearch.Search;
 import org.zaproxy.zap.view.panelsearch.items.ComponentSearch;
 
+import javax.swing.SwingUtilities;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,12 +40,14 @@ public class AbstractParamContainerPanelSearchAndHighlight {
             ArrayList<FoundComponent> findings = search.searchFor(new Object[] { panel }, query);
 
             currentHighlighterResult = highlighter.highlight(findings);
+            SwingUtilities.invokeLater(() -> panel.repaint());
         }
     }
 
     public void clearHighlight(){
         if(currentHighlighterResult != null){
             highlighter.undoHighlight(currentHighlighterResult);
+            SwingUtilities.invokeLater(() -> panel.repaint());
         }
     }
 }

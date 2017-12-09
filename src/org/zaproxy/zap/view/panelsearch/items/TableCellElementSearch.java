@@ -45,29 +45,32 @@ public class TableCellElementSearch extends AbstractComponentSearch<TableCellEle
     }
 
     private TableCellRenderer getCellRenderer(TableCellElement component){
-        return component.getTable().getColumn(component.getColumnIndex()).getCellRenderer();
+        return component.getTable().getColumn(component.getColumnIdentifier()).getCellRenderer();
     }
 
     private void setCellRenderer(TableCellElement component, TableCellRenderer renderer){
-        component.getTable().getColumn(component.getColumnIndex()).setCellRenderer(renderer);
+        component.getTable().getColumn(component.getColumnIdentifier()).setCellRenderer(renderer);
     }
 
     public static class HighlightTableCellRenderer implements TableCellRenderer{
 
+        private TableCellRenderer fallBackRenderer;
         private TableCellRenderer originalRenderer;
         private ArrayList<TableCellElement> highlighted = new ArrayList<>();
 
         public HighlightTableCellRenderer(TableCellRenderer originalRenderer) {
             this.originalRenderer = originalRenderer;
+            this.fallBackRenderer = new DefaultTableCellRenderer();
         }
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            Component item = originalRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            if(highlighted.stream().anyMatch(e -> e.getColumnIndex() == column && e.getRowIndex() == row)){
+            Component item = getRender().getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+            Object columnIdentifier = table.getColumnModel().getColumn(column).getIdentifier();
+            if (highlighted.stream().anyMatch(e -> e.getColumnIdentifier().equals(columnIdentifier) && e.getRowIndex() == row)) {
                 trySetOpaque(item, true);
                 item.setBackground(HighlighterUtils.DefaultHighlightColor);
-            }else{
+            } else {
                 trySetOpaque(item, false);
                 item.setBackground(null);
             }
@@ -86,6 +89,13 @@ public class TableCellElementSearch extends AbstractComponentSearch<TableCellEle
 
         public void addHighlighted(TableCellElement element) {
             highlighted.add(element);
+        }
+
+        public TableCellRenderer getRender() {
+            if(originalRenderer == null){
+                return fallBackRenderer;
+            }
+            return originalRenderer;
         }
     }
 }
