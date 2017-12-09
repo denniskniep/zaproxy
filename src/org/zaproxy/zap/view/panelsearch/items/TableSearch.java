@@ -1,5 +1,8 @@
 package org.zaproxy.zap.view.panelsearch.items;
 
+import org.zaproxy.zap.view.panelsearch.HighlightedComponent;
+import org.zaproxy.zap.view.panelsearch.HighlighterUtils;
+
 import javax.swing.JTable;
 import java.util.ArrayList;
 
@@ -17,5 +20,10 @@ public class TableSearch extends AbstractComponentSearch<JTable>  {
         }
 
         return elements.toArray();
+    }
+
+    @Override
+    protected HighlightedComponent highlightAsParentInternal(JTable component) {
+        return HighlighterUtils.highlightBorder(component, HighlighterUtils.DefaultHighlightColor);
     }
 }

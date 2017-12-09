@@ -5,6 +5,8 @@ import org.zaproxy.zap.view.panelsearch.items.ComboBoxElementSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComboBoxSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComponentSearch;
 import org.zaproxy.zap.view.panelsearch.items.ContainerSearch;
+import org.zaproxy.zap.view.panelsearch.items.TabbedPaneElementSearch;
+import org.zaproxy.zap.view.panelsearch.items.TabbedPaneSearch;
 import org.zaproxy.zap.view.panelsearch.items.TableCellElementSearch;
 import org.zaproxy.zap.view.panelsearch.items.TableSearch;
 import org.zaproxy.zap.view.panelsearch.items.LabelSearch;
@@ -27,6 +29,8 @@ public class Search {
             new ComboBoxElementSearch(),
             new TableSearch(),
             new TableCellElementSearch(),
+            new TabbedPaneSearch(),
+            new TabbedPaneElementSearch(),
             new ContainerSearch() //Must be the last item, because it fits all!
     );
 
