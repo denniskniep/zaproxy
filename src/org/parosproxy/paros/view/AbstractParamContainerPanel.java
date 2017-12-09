@@ -64,7 +64,7 @@ import org.zaproxy.zap.extension.help.ExtensionHelp;
 import org.zaproxy.zap.utils.DisplayUtils;
 import org.zaproxy.zap.utils.FontUtils;
 import org.zaproxy.zap.utils.ZapTextField;
-import org.zaproxy.zap.view.panelsearch.HighlighterResult;
+import org.zaproxy.zap.view.AbstractParamContainerPanelSearchAndHighlight;
 
 public class AbstractParamContainerPanel extends JSplitPane {
 

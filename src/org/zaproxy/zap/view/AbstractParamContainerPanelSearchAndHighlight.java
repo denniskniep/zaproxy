@@ -1,5 +1,6 @@
-package org.parosproxy.paros.view;
+package org.zaproxy.zap.view;
 
+import org.parosproxy.paros.view.AbstractParamContainerPanel;
 import org.zaproxy.zap.view.panelsearch.FoundComponent;
 import org.zaproxy.zap.view.panelsearch.Highlighter;
 import org.zaproxy.zap.view.panelsearch.HighlighterResult;

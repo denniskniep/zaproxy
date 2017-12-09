@@ -1,5 +1,7 @@
-package org.parosproxy.paros.view;
+package org.zaproxy.zap.view;
 
+import org.parosproxy.paros.view.AbstractParamContainerPanel;
+import org.parosproxy.paros.view.AbstractParamPanel;
 import org.zaproxy.zap.view.panelsearch.items.AbstractComponentSearch;
 import org.zaproxy.zap.view.panelsearch.items.TreeNodeElement;
 import org.zaproxy.zap.view.panelsearch.items.TreeSearch;
