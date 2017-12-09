@@ -1,7 +1,6 @@
 package org.zaproxy.zap.view.panelsearch;
 
 import org.junit.Test;
-import org.parosproxy.paros.view.OptionsDialog;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -20,8 +19,9 @@ public class SearchUnitTest {
         panel.setName(panelName);
         panel.add(new JButton(btnText));
 
-        Search search = new Search();
-        ArrayList<FoundComponent> findings = search.SearchFor(panel, "stom");
+        Search search = new Search(Search.DefaultComponentSearchItems);
+        SearchQuery query = new InStringSearchQuery("stom");
+        ArrayList<FoundComponent> findings = search.searchFor(panel, query);
 
         FoundComponent foundComponent = findings.get(0);
         JPanel foundPanel = foundComponent.getParentAtCasted(0);

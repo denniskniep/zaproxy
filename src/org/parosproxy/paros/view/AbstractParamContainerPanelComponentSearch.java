@@ -1,13 +1,12 @@
-package org.zaproxy.zap.view.panelsearch.items;
+package org.parosproxy.paros.view;
 
-import org.parosproxy.paros.view.AbstractParamContainerPanel;
-import org.parosproxy.paros.view.AbstractParamPanel;
+import org.zaproxy.zap.view.panelsearch.items.AbstractComponentSearch;
+import org.zaproxy.zap.view.panelsearch.items.TreeNodeElement;
+import org.zaproxy.zap.view.panelsearch.items.TreeSearch;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
-
-public class AbstractParamContainerPanelSearch extends  AbstractComponentSearch<AbstractParamContainerPanel> {
+public class AbstractParamContainerPanelComponentSearch extends AbstractComponentSearch<AbstractParamContainerPanel> {
 
     @Override
     protected Object[] getComponentsInternal(AbstractParamContainerPanel component) {
@@ -19,6 +18,7 @@ public class AbstractParamContainerPanelSearch extends  AbstractComponentSearch<
         // The name of the panel is the name of the Node
 
         TreeSearch search = new TreeSearch();
+        //ToDo: Respect Hierarchy
         ArrayList<TreeNodeElement> treeNodeElements = search.getTreeNodeElement(component.getTreeParam());
         for (TreeNodeElement treeNodeElement : treeNodeElements){
             AbstractParamPanel panel = component.getParamPanel(treeNodeElement.getNode().toString());

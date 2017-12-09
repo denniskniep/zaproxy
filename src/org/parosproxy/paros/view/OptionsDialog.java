@@ -28,7 +28,6 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -37,10 +36,6 @@ import org.apache.log4j.Logger;
 import org.parosproxy.paros.Constant;
 import org.parosproxy.paros.model.Model;
 import org.parosproxy.paros.model.OptionsParam;
-import org.zaproxy.zap.view.panelsearch.FoundComponent;
-import org.zaproxy.zap.view.panelsearch.Highlighter;
-import org.zaproxy.zap.view.panelsearch.HighlighterResult;
-import org.zaproxy.zap.view.panelsearch.Search;
 
 public class OptionsDialog extends AbstractParamDialog {
 
@@ -77,84 +72,38 @@ public class OptionsDialog extends AbstractParamDialog {
 	@Override
     public JButton[] getExtraButtons() {
 	    if (extraButtons == null) {
-	        extraButtons = new JButton[] { getResetButton(), getSearchButton(), getClearSearchButton() };
+	        JButton resetButton = new JButton(Constant.messages.getString("options.dialog.reset.button"));
+	        resetButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (View.getSingleton().showConfirmDialog(
+                            OptionsDialog.this, Constant.messages.getString("options.dialog.reset.warn"))
+                                == JOptionPane.OK_OPTION) {
+                        try {
+                            OptionsParam params = Model.getSingleton().getOptionsParam();
+                            // Force the install files to be copied
+                            Constant.getInstance().copyDefaultConfigs(new File(Constant.getInstance().FILE_CONFIG), true);
+                            // Load them
+                            params.load(Constant.getInstance().FILE_CONFIG);
+                            // Force a reload in all of the option params
+                            params.reloadConfigParamSets();
+                            params.resetAll();
+
+                            resetAllPanels();
+                            // Reinit the dialog
+                            OptionsDialog.this.initParam(params);
+
+                        } catch (Exception e1) {
+                            logger.error("Failed to reset to defaults:", e1);
+                            View.getSingleton().showWarningDialog(
+                                    Constant.messages.getString("options.dialog.reset.error", e1.getMessage()));
+                        }
+                    }
+                }
+            });
+	        extraButtons = new JButton[] {resetButton};
 	    }
         return extraButtons;
-    }
-
-    private JButton getResetButton(){
-        JButton resetButton =  new JButton(Constant.messages.getString("options.dialog.reset.button"));
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (View.getSingleton().showConfirmDialog(
-                        OptionsDialog.this, Constant.messages.getString("options.dialog.reset.warn"))
-                        == JOptionPane.OK_OPTION) {
-                    try {
-                        OptionsParam params = Model.getSingleton().getOptionsParam();
-                        // Force the install files to be copied
-                        Constant.getInstance().copyDefaultConfigs(new File(Constant.getInstance().FILE_CONFIG), true);
-                        // Load them
-                        params.load(Constant.getInstance().FILE_CONFIG);
-                        // Force a reload in all of the option params
-                        params.reloadConfigParamSets();
-                        params.resetAll();
-
-                        resetAllPanels();
-                        // Reinit the dialog
-                        OptionsDialog.this.initParam(params);
-
-                    } catch (Exception e1) {
-                        logger.error("Failed to reset to defaults:", e1);
-                        View.getSingleton().showWarningDialog(
-                                Constant.messages.getString("options.dialog.reset.error", e1.getMessage()));
-                    }
-                }
-            }
-        });
-        return resetButton;
-    }
-
-    private HighlighterResult currentHighlighterResult;
-    private JButton getSearchButton(){
-        JButton searchButton =  new JButton("Search");
-        searchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clearHighlight();
-                String searchFor = JOptionPane.showInputDialog(OptionsDialog.this, "Search for...");
-                if(searchFor != null && !searchFor.isEmpty()){
-                    Search search = new Search();
-                    ArrayList<FoundComponent> findings = search.SearchFor(OptionsDialog.this, searchFor);
-
-                    Highlighter highlighter = new Highlighter();
-                    currentHighlighterResult = highlighter.highlight(findings);
-
-                    if(findings.size() == 0){
-                        View.getSingleton().showWarningDialog("Nothing found!");
-                    }
-                }
-            }
-        });
-        return searchButton;
-    }
-
-    private void clearHighlight(){
-        if(currentHighlighterResult != null){
-            Highlighter highlighter = new Highlighter();
-            highlighter.undoHighlight(currentHighlighterResult);
-        }
-    }
-
-    private JButton getClearSearchButton(){
-        JButton clearSearchButton =  new JButton("Reset Search");
-        clearSearchButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                clearHighlight();
-            }
-        });
-        return clearSearchButton;
     }
 
     private void resetAllPanels() {

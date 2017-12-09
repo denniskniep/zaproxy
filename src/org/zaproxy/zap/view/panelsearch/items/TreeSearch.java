@@ -12,7 +12,7 @@ public class TreeSearch extends AbstractComponentSearch<JTree> {
 
     public ArrayList<TreeNodeElement> getTreeNodeElement(JTree component){
         ArrayList<TreeNodeElement> elements = new ArrayList<>();
-
+        //ToDo: Respect Hierarchy
         Object rootNode = component.getModel().getRoot();
         int childCount = component.getModel().getChildCount(rootNode);
 

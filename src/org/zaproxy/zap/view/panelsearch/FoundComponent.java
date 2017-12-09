@@ -1,6 +1,5 @@
 package org.zaproxy.zap.view.panelsearch;
 
-import org.zaproxy.zap.view.panelsearch.items.ComponentSearch;
 import org.zaproxy.zap.view.panelsearch.items.Generic;
 
 import java.util.ArrayList;
@@ -9,11 +8,9 @@ import java.util.List;
 public class FoundComponent{
     private final Object component;
     private final List<Object> parents;
-    private final ComponentSearch foundBy;
 
-    public FoundComponent(Object component, ComponentSearch foundBy) {
+    public FoundComponent(Object component) {
         this.component = component;
-        this.foundBy = foundBy;
         this.parents = new ArrayList<>();
     }
 
@@ -23,10 +20,6 @@ public class FoundComponent{
 
     public <T> T getComponentCasted() {
         return Generic.cast(component);
-    }
-
-    public ComponentSearch getFoundBy() {
-        return foundBy;
     }
 
     public void addParent(Object parent){

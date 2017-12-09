@@ -25,6 +25,7 @@
 // ZAP: 2016/10/27 Explicitly show other panel when the selected panel is removed.
 // ZAP: 2017/06/23 Ensure panel with validation errors is visible.
 // ZAP: 2017/09/03 Cope with Java 9 change to TreeNode.children().
+// ZAP: 2017/12/09 Issue 3358: Added SearchPanel.
 
 package org.parosproxy.paros.view;
 
@@ -36,6 +37,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Collection;
@@ -47,6 +50,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
@@ -60,6 +64,7 @@ import org.zaproxy.zap.extension.help.ExtensionHelp;
 import org.zaproxy.zap.utils.DisplayUtils;
 import org.zaproxy.zap.utils.FontUtils;
 import org.zaproxy.zap.utils.ZapTextField;
+import org.zaproxy.zap.view.panelsearch.HighlighterResult;
 
 public class AbstractParamContainerPanel extends JSplitPane {
 
@@ -86,6 +91,14 @@ public class AbstractParamContainerPanel extends JSplitPane {
     private DefaultMutableTreeNode rootNode = null;  //  @jve:decl-index=0:parse,visual-constraint="10,50"
     private JScrollPane jScrollPane = null;
     private JScrollPane jScrollPane1 = null;
+
+    // ZAP: show SearchPanel
+    private JPanel leftPanel;
+    private ZapTextField searchTextField;
+    private JButton btnSearch;
+    private JButton btnClearSearch;
+    private JToolBar searchToolBar;
+    private AbstractParamContainerPanelSearchAndHighlight searchAndHighlight;
     
     // ZAP: show the last selected panel
     private String nameLastSelectedPanel = null;
@@ -124,8 +137,8 @@ public class AbstractParamContainerPanel extends JSplitPane {
         this.setDividerSize(3);
         this.setResizeWeight(0.3D);
         this.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.LOWERED));
-        this.setLeftComponent(getJScrollPane());
-
+        this.setLeftComponent(getLeftPanel());
+        searchAndHighlight = new AbstractParamContainerPanelSearchAndHighlight(this);
     }
 
 
@@ -717,6 +730,97 @@ public class AbstractParamContainerPanel extends JSplitPane {
             getTreeModel().nodeChanged(node.getParent());
         }
     }
+
+    private JPanel getLeftPanel() {
+
+        if (leftPanel == null) {
+            leftPanel = new JPanel();
+            leftPanel.setLayout(new BorderLayout());
+            leftPanel.add(getSearchToolbar(), BorderLayout.PAGE_START);
+            leftPanel.add(getJScrollPane(), BorderLayout.CENTER);
+        }
+        return leftPanel;
+    }
+
+    private JToolBar getSearchToolbar(){
+        if (searchToolBar == null) {
+            searchToolBar = new JToolBar();
+            searchToolBar.setLayout(new GridBagLayout());
+            searchToolBar.setEnabled(true);
+            searchToolBar.setFloatable(false);
+            searchToolBar.setRollover(true);
+            searchToolBar.setName("Search Toolbar");
+
+            GridBagConstraints cons = new GridBagConstraints();
+            cons.fill = GridBagConstraints.HORIZONTAL;
+            cons.insets = new java.awt.Insets(0, 0, 0, 0);
+            cons.weightx = 1;
+            cons.gridx = 0;
+            searchToolBar.add(getSearchTextField(),cons);
+
+            cons.weightx = 0;
+            cons.gridx = 1;
+            searchToolBar.add(getSearchButton(), cons);
+
+            cons.weightx = 0;
+            cons.gridx = 2;
+            searchToolBar.add(getClearSearchButton(), cons);
+        }
+        return searchToolBar;
+    }
+
+    private ZapTextField getSearchTextField(){
+        if (searchTextField == null) {
+            searchTextField = new ZapTextField();
+
+            searchTextField.addKeyListener(new KeyAdapter() {
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                        searchAndHighlight.searchAndHighlight(searchTextField.getText());
+                    }
+                }
+            });
+        }
+        return searchTextField;
+    }
+
+    private JButton getSearchButton(){
+        if (btnSearch == null) {
+            btnSearch = new JButton();
+            btnSearch.setIcon(new ImageIcon(AbstractParamContainerPanel.class.getResource("/resource/icon/16/049.png"))); // search icon
+            btnSearch.setToolTipText("Search or press 'Enter'");
+
+            btnSearch.addActionListener(new java.awt.event.ActionListener() {
+
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    searchAndHighlight.searchAndHighlight(searchTextField.getText());
+                }
+            });
+        }
+        return btnSearch;
+    }
+
+    private JButton getClearSearchButton(){
+        if (btnClearSearch == null) {
+            btnClearSearch = new JButton();
+            btnClearSearch.setIcon(new ImageIcon(AbstractParamContainerPanel.class.getResource("/resource/icon/16/101.png"))); // cancel icon
+            btnClearSearch.setToolTipText("Clear Search Results");
+
+            btnClearSearch.addActionListener(new java.awt.event.ActionListener() {
+
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    searchTextField.setText("");
+                    searchAndHighlight.clearHighlight();
+                }
+            });
+        }
+        return btnClearSearch;
+    }
+
 
     /**
      * This method initializes jScrollPane

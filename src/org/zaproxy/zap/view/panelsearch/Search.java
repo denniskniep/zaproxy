@@ -1,6 +1,5 @@
 package org.zaproxy.zap.view.panelsearch;
 
-import org.zaproxy.zap.view.panelsearch.items.AbstractParamContainerPanelSearch;
 import org.zaproxy.zap.view.panelsearch.items.ButtonSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComponentSearch;
 import org.zaproxy.zap.view.panelsearch.items.ContainerSearch;
@@ -14,8 +13,8 @@ import java.util.List;
 
 public class Search {
 
-    private static final List<ComponentSearch> componentSearchItems = Arrays.asList(
-            new AbstractParamContainerPanelSearch(),
+    public static final List<ComponentSearch> DefaultComponentSearchItems = Arrays.asList(
+            //TODO: delete: new AbstractParamContainerPanelComponentSearch(),
             new TreeSearch(),
             new ButtonSearch(),
             new TreeNodeElementSearch(),
@@ -23,12 +22,17 @@ public class Search {
             new ContainerSearch() //Must be the last item, because it fits all!
     );
 
-    public ArrayList<FoundComponent> SearchFor(Object component, String text){
-        InStringSearchQuery query = new InStringSearchQuery(text);
-        return SearchFor(new Object[] { component }, query);
+    private final List<ComponentSearch> componentSearchItems;
+
+    public Search(List<ComponentSearch> componentSearchItems) {
+        this.componentSearchItems = componentSearchItems;
     }
 
-    public ArrayList<FoundComponent> SearchFor(Object[] components, SearchQuery query){
+    public ArrayList<FoundComponent> searchFor(Object component, SearchQuery query) {
+        return searchFor(new Object[]{ component }, query);
+    }
+
+    public ArrayList<FoundComponent> searchFor(Object[] components, SearchQuery query){
         ArrayList<FoundComponent> foundComponents = new ArrayList<>();
 
         for (Object component : components){
@@ -37,11 +41,11 @@ public class Search {
 
                 if(componentSearchItem.isResponsible(component)){
                     if(componentSearchItem.isSearchMatching(component, query)){
-                        foundComponents.add(new FoundComponent(component, componentSearchItem));
+                        foundComponents.add(new FoundComponent(component));
                     }
 
                     Object[] childComponents = componentSearchItem.getComponents(component);
-                    ArrayList<FoundComponent> foundChildComponents = SearchFor(childComponents, query);
+                    ArrayList<FoundComponent> foundChildComponents = searchFor(childComponents, query);
 
                     for (FoundComponent foundChildComponent : foundChildComponents){
                         foundChildComponent.addParent(component);

@@ -14,11 +14,17 @@ import java.util.function.Predicate;
 
 public class Highlighter {
 
-    private static final List<ComponentHighlighter> componentHighlighterItems = Arrays.asList(
+    public static final List<ComponentHighlighter> DefaultComponentHighlighterItems = Arrays.asList(
             new ButtonSearch(),
             new TreeNodeElementSearch(),
             new LabelSearch()
     );
+
+    private final List<ComponentHighlighter> componentHighlighterItems;
+
+    public Highlighter(List<ComponentHighlighter> componentHighlighterItems) {
+        this.componentHighlighterItems = componentHighlighterItems;
+    }
 
     public HighlighterResult highlight(ArrayList<FoundComponent> foundComponents){
         ArrayList<HighlightedComponent> highlightedComponents = new ArrayList<>();
