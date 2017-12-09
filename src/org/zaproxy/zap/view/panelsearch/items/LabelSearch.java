@@ -25,6 +25,6 @@ public class LabelSearch extends AbstractComponentSearch<JLabel> {
 
     @Override
     protected void undoHighlightInternal(HighlightedComponent highlightedComponent, JLabel component) {
-       HighlighterUtils.undoHighlightBackground(highlightedComponent);
+       HighlighterUtils.undoHighlightBackground(highlightedComponent, component);
     }
 }

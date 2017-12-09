@@ -1,7 +1,5 @@
 package org.zaproxy.zap.view.panelsearch;
 
-import org.zaproxy.zap.view.panelsearch.HighlightedComponent;
-
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import java.awt.Color;
@@ -23,12 +21,9 @@ public final class HighlighterUtils {
         return highlightedComponent;
     }
 
-    public static void undoHighlightBackground(HighlightedComponent highlightedComponent){
-        if(highlightedComponent.getComponent() instanceof JComponent){
-            JComponent component = (JComponent)highlightedComponent.getComponent();
-            component.setOpaque(highlightedComponent.get(OPAQUE));
-            component.setBackground(highlightedComponent.get(BACKGROUND));
-        }
+    public static void undoHighlightBackground(HighlightedComponent highlightedComponent, JComponent component){
+        component.setOpaque(highlightedComponent.get(OPAQUE));
+        component.setBackground(highlightedComponent.get(BACKGROUND));
     }
 
     public static HighlightedComponent highlightBorder(JComponent component, Color color){
@@ -38,10 +33,7 @@ public final class HighlighterUtils {
         return highlightedComponent;
     }
 
-    public static void undoHighlightBorder(HighlightedComponent highlightedComponent){
-        if(highlightedComponent.getComponent() instanceof JComponent){
-            JComponent component = (JComponent)highlightedComponent.getComponent();
-            component.setBorder(highlightedComponent.get(BORDER));
-        }
+    public static void undoHighlightBorder(HighlightedComponent highlightedComponent, JComponent component){
+        component.setBorder(highlightedComponent.get(BORDER));
     }
 }

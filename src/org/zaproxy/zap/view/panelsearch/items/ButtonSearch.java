@@ -26,7 +26,7 @@ public class ButtonSearch extends AbstractComponentSearch<AbstractButton> {
 
     @Override
     protected void undoHighlightInternal(HighlightedComponent highlightedComponent, AbstractButton component) {
-        HighlighterUtils.undoHighlightBackground(highlightedComponent);
+        HighlighterUtils.undoHighlightBackground(highlightedComponent, component);
     }
 }
 

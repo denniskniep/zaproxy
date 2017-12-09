@@ -67,9 +67,9 @@ public class TreeNodeElementSearch extends AbstractComponentSearch<TreeNodeEleme
 
     public static class HighlightTreeCellRenderer implements TreeCellRenderer {
 
-        ArrayList<Object> highlightedNodes = new ArrayList<>();
-        ArrayList<Object> highlightedParentNodes = new ArrayList<>();
-        TreeCellRenderer originalCellRenderer;
+        private ArrayList<Object> highlightedNodes = new ArrayList<>();
+        private ArrayList<Object> highlightedParentNodes = new ArrayList<>();
+        private TreeCellRenderer originalCellRenderer;
 
         public HighlightTreeCellRenderer(TreeCellRenderer originalCellRenderer) {
 

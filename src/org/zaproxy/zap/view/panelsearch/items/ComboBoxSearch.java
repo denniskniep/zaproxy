@@ -25,7 +25,7 @@ public class ComboBoxSearch extends AbstractComponentSearch<JComboBox> {
 
     @Override
     protected void undoHighlightInternal(HighlightedComponent highlightedComponent, JComboBox component) {
-        HighlighterUtils.undoHighlightBackground(highlightedComponent);
+        HighlighterUtils.undoHighlightBackground(highlightedComponent, component);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ComboBoxSearch extends AbstractComponentSearch<JComboBox> {
 
     @Override
     protected void undoHighlightAsParentInternal(HighlightedComponent highlightedComponent, JComboBox component) {
-        HighlighterUtils.undoHighlightBorder(highlightedComponent);
+        HighlighterUtils.undoHighlightBorder(highlightedComponent, component);
     }
 
 }
