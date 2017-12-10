@@ -14,17 +14,25 @@ public final class HighlighterUtils {
     public static final Color DefaultHighlightColor = new Color(255, 204, 0);
 
     public static HighlightedComponent highlightBackground(JComponent component, Color color){
-        HighlightedComponent highlightedComponent = new HighlightedComponent(component);
-        highlightedComponent.put(OPAQUE, component.isOpaque());
-        highlightedComponent.put(BACKGROUND, component.getBackground());
-        component.setOpaque(true);
-        component.setBackground(color);
+        return highlightBackground(new JComponentWithBackground(component), color);
+    }
+
+    public static HighlightedComponent highlightBackground(ComponentWithBackground componentWithBackground, Color color){
+        HighlightedComponent highlightedComponent = new HighlightedComponent(componentWithBackground.getComponent());
+        highlightedComponent.put(OPAQUE, componentWithBackground.isOpaque());
+        highlightedComponent.put(BACKGROUND, componentWithBackground.getBackground());
+        componentWithBackground.setOpaque(true);
+        componentWithBackground.setBackground(color);
         return highlightedComponent;
     }
 
     public static void undoHighlightBackground(HighlightedComponent highlightedComponent, JComponent component){
-        component.setOpaque(highlightedComponent.get(OPAQUE));
-        component.setBackground(highlightedComponent.get(BACKGROUND));
+        undoHighlightBackground(new JComponentWithBackground(component), highlightedComponent);
+    }
+
+    public static void undoHighlightBackground(ComponentWithBackground componentWithBackground, HighlightedComponent highlightedComponent){
+        componentWithBackground.setOpaque(highlightedComponent.get(OPAQUE));
+        componentWithBackground.setBackground(highlightedComponent.get(BACKGROUND));
     }
 
     public static HighlightedComponent highlightTitleBorderWithHtml(ComponentWithTitle componentWithTitle){

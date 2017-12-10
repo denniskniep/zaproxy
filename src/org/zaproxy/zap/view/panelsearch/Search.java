@@ -6,6 +6,8 @@ import org.zaproxy.zap.view.panelsearch.items.ComboBoxSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComponentSearch;
 import org.zaproxy.zap.view.panelsearch.items.ContainerSearch;
 import org.zaproxy.zap.view.panelsearch.items.JComponentSearch;
+import org.zaproxy.zap.view.panelsearch.items.SpinnerSearch;
+import org.zaproxy.zap.view.panelsearch.items.TextFieldSearch;
 import org.zaproxy.zap.view.panelsearch.items.TitledBorderSearch;
 import org.zaproxy.zap.view.panelsearch.items.TabbedPaneElementSearch;
 import org.zaproxy.zap.view.panelsearch.items.TabbedPaneSearch;
@@ -27,6 +29,8 @@ public class Search {
             new ButtonSearch(),
             new TreeNodeElementSearch(),
             new LabelSearch(),
+            new SpinnerSearch(),
+            new TextFieldSearch(),
             new ComboBoxSearch(),
             new ComboBoxElementSearch(),
             new TableSearch(),

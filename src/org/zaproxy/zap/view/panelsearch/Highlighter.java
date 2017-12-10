@@ -4,11 +4,13 @@ import org.zaproxy.zap.view.panelsearch.items.ButtonSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComboBoxElementSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComboBoxSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComponentHighlighter;
+import org.zaproxy.zap.view.panelsearch.items.SpinnerSearch;
 import org.zaproxy.zap.view.panelsearch.items.TabbedPaneElementSearch;
 import org.zaproxy.zap.view.panelsearch.items.TabbedPaneSearch;
 import org.zaproxy.zap.view.panelsearch.items.TableCellElementSearch;
 import org.zaproxy.zap.view.panelsearch.items.TableSearch;
 import org.zaproxy.zap.view.panelsearch.items.LabelSearch;
+import org.zaproxy.zap.view.panelsearch.items.TextFieldSearch;
 import org.zaproxy.zap.view.panelsearch.items.TitledBorderSearch;
 import org.zaproxy.zap.view.panelsearch.items.TreeNodeElementSearch;
 
@@ -23,6 +25,8 @@ public class Highlighter {
             new ButtonSearch(),
             new TreeNodeElementSearch(),
             new LabelSearch(),
+            new SpinnerSearch(),
+            new TextFieldSearch(),
             new ComboBoxSearch(),
             new ComboBoxElementSearch(),
             new TableSearch(),
