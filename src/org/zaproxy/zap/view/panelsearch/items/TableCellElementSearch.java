@@ -6,20 +6,10 @@ import org.zaproxy.zap.view.panelsearch.SearchQuery;
 
 import javax.swing.JTable;
 import javax.swing.UIManager;
-import javax.swing.plaf.synth.SynthTableUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import java.awt.Color;
 import java.awt.Component;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 

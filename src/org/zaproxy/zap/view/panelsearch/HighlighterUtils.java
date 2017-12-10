@@ -9,6 +9,7 @@ public final class HighlighterUtils {
     private static final String OPAQUE = "Opaque";
     private static final String BACKGROUND = "Background";
     private static final String BORDER = "Border";
+    private static final String TITLE = "title";
 
     public static final Color DefaultHighlightColor = new Color(255, 204, 0);
 
@@ -24,6 +25,39 @@ public final class HighlighterUtils {
     public static void undoHighlightBackground(HighlightedComponent highlightedComponent, JComponent component){
         component.setOpaque(highlightedComponent.get(OPAQUE));
         component.setBackground(highlightedComponent.get(BACKGROUND));
+    }
+
+    public static HighlightedComponent highlightTitleBorderWithHtml(ComponentWithTitle componentWithTitle){
+        return highlightTitleWithHtml(componentWithTitle, "<html><div style=' border: 1px solid; border-color: #FFCC00;'>%s</div></html>");
+    }
+
+    public static void undoHighlightTitleBorderWithHtml(ComponentWithTitle componentWithTitle, HighlightedComponent highlightedComponent){
+        undoHighlightTitleWithHtml(componentWithTitle, highlightedComponent);
+    }
+
+    public static HighlightedComponent highlightTitleBackgroundWithHtml(ComponentWithTitle componentWithTitle){
+        return highlightTitleWithHtml(componentWithTitle, "<html><span style='background-color:#FFCC00;'>%s</span></html>");
+    }
+
+    public static void undoHighlightTitleBackgroundWithHtml(ComponentWithTitle componentWithTitle, HighlightedComponent highlightedComponent){
+        undoHighlightTitleWithHtml(componentWithTitle, highlightedComponent);
+    }
+
+    private static HighlightedComponent highlightTitleWithHtml(ComponentWithTitle componentWithTitle, String format){
+        HighlightedComponent highlightedComponent = new HighlightedComponent(componentWithTitle.getComponent());
+        String title = componentWithTitle.getTitle();
+        if(!title.startsWith("<html>")){
+            highlightedComponent.put(TITLE, title);
+            String titleWithinHtml = String.format(format, title);
+            componentWithTitle.setTitle(titleWithinHtml);
+            return highlightedComponent;
+        }
+        return null;
+    }
+
+    private static void undoHighlightTitleWithHtml(ComponentWithTitle componentWithTitle, HighlightedComponent highlightedComponent){
+        String title = highlightedComponent.get(TITLE);
+        componentWithTitle.setTitle(title);
     }
 
     public static HighlightedComponent highlightBorder(JComponent component, Color color){

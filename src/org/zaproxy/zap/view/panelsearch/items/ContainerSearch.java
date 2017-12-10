@@ -11,13 +11,6 @@ import java.util.List;
 
 public class ContainerSearch implements ComponentSearch {
 
-    private static final List<Class> containerClasses = Arrays.asList(
-        Container.class
-        //JPanel.class,
-        //JComponent.class
-        //JSplitPane.class
-    );
-
     @Override
     public boolean isResponsible(Object component) {
         return true;
@@ -30,7 +23,7 @@ public class ContainerSearch implements ComponentSearch {
 
     @Override
     public Object[] getComponents(Object component) {
-          if(containerClasses.stream().anyMatch((c) -> c.isInstance(component))){
+          if(component instanceof Container){
               return ((Container)component).getComponents();
           }
           return new Object[]{};

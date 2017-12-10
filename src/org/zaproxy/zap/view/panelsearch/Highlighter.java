@@ -9,6 +9,7 @@ import org.zaproxy.zap.view.panelsearch.items.TabbedPaneSearch;
 import org.zaproxy.zap.view.panelsearch.items.TableCellElementSearch;
 import org.zaproxy.zap.view.panelsearch.items.TableSearch;
 import org.zaproxy.zap.view.panelsearch.items.LabelSearch;
+import org.zaproxy.zap.view.panelsearch.items.TitledBorderSearch;
 import org.zaproxy.zap.view.panelsearch.items.TreeNodeElementSearch;
 
 import java.util.ArrayList;
@@ -27,7 +28,8 @@ public class Highlighter {
             new TableSearch(),
             new TableCellElementSearch(),
             new TabbedPaneSearch(),
-            new TabbedPaneElementSearch()
+            new TabbedPaneElementSearch(),
+            new TitledBorderSearch()
     );
 
     private final List<ComponentHighlighter> componentHighlighterItems;
@@ -48,7 +50,7 @@ public class Highlighter {
         return new HighlighterResult(highlightedComponents, highlightedParentComponents);
     }
 
-    private ArrayList<HighlightedComponent> highlightComponents(List<Object> components,  BiFunction<ComponentHighlighter, Object, HighlightedComponent> highlightAction){
+    private ArrayList<HighlightedComponent> highlightComponents(List<Object> components, BiFunction<ComponentHighlighter, Object, HighlightedComponent> highlightAction){
         ArrayList<HighlightedComponent> highlightedComponents = new ArrayList<>();
         for (Object component : components){
             HighlightedComponent highlightedComponent = highlightComponent(component, highlightAction);
