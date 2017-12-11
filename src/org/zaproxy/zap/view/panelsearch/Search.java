@@ -6,14 +6,14 @@ import org.zaproxy.zap.view.panelsearch.items.ComboBoxSearch;
 import org.zaproxy.zap.view.panelsearch.items.ComponentSearch;
 import org.zaproxy.zap.view.panelsearch.items.ContainerSearch;
 import org.zaproxy.zap.view.panelsearch.items.JComponentSearch;
+import org.zaproxy.zap.view.panelsearch.items.LabelSearch;
 import org.zaproxy.zap.view.panelsearch.items.SpinnerSearch;
-import org.zaproxy.zap.view.panelsearch.items.TextFieldSearch;
-import org.zaproxy.zap.view.panelsearch.items.TitledBorderSearch;
 import org.zaproxy.zap.view.panelsearch.items.TabbedPaneElementSearch;
 import org.zaproxy.zap.view.panelsearch.items.TabbedPaneSearch;
 import org.zaproxy.zap.view.panelsearch.items.TableCellElementSearch;
 import org.zaproxy.zap.view.panelsearch.items.TableSearch;
-import org.zaproxy.zap.view.panelsearch.items.LabelSearch;
+import org.zaproxy.zap.view.panelsearch.items.TextFieldSearch;
+import org.zaproxy.zap.view.panelsearch.items.TitledBorderSearch;
 import org.zaproxy.zap.view.panelsearch.items.TreeNodeElementSearch;
 import org.zaproxy.zap.view.panelsearch.items.TreeSearch;
 
@@ -24,7 +24,6 @@ import java.util.List;
 public class Search {
 
     public static final List<ComponentSearch> DefaultComponentSearchItems = Arrays.asList(
-            //TODO: delete: new AbstractParamContainerPanelComponentSearch(),
             new TreeSearch(),
             new ButtonSearch(),
             new TreeNodeElementSearch(),

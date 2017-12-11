@@ -76,6 +76,8 @@ public final class HighlighterUtils {
     }
 
     public static void undoHighlightBorder(HighlightedComponent highlightedComponent, JComponent component){
-        component.setBorder(highlightedComponent.get(BORDER));
+        component.setBorder(BorderFactory.createEmptyBorder());
+        //ToDo: We should reset it back to the original border, but that currently does not work. Sometimes the yellow highlight border stays there!
+        //component.setBorder(highlightedComponent.get(BORDER));
     }
 }

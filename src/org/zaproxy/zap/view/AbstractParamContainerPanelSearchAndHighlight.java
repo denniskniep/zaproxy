@@ -26,9 +26,9 @@ public class AbstractParamContainerPanelSearchAndHighlight {
     }
 
     private List<ComponentSearch> getComponentSearchItems() {
-        List<ComponentSearch> componentSearchItems = Search.DefaultComponentSearchItems;
+        List<ComponentSearch> componentSearchItems = new ArrayList<>(Search.DefaultComponentSearchItems);
         // Fakes that a treeNodes children is a paramPanel
-        componentSearchItems.set(0, new AbstractParamContainerPanelComponentSearch());
+        componentSearchItems.add(0, new AbstractParamContainerPanelComponentSearch());
         return componentSearchItems;
     }
 

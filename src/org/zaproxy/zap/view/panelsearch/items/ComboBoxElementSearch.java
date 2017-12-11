@@ -82,6 +82,7 @@ public class ComboBoxElementSearch extends AbstractComponentSearch<ComboBoxEleme
         }
 
         public ListCellRenderer getOriginalRenderer(){
+            //ToDo: reset rendererLike in tree?
             return originalRenderer;
         }
 

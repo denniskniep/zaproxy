@@ -15,12 +15,12 @@ public abstract class AbstractComponentSearch<T> implements ComponentSearch, Com
     }
 
     @Override
-    public boolean isResponsible(Object component){
+    public final boolean isResponsible(Object component){
         return componentType.isInstance(component);
     }
 
     @Override
-    public boolean isSearchMatching(Object component, SearchQuery query) {
+    public final boolean isSearchMatching(Object component, SearchQuery query) {
         if(isResponsible(component)){
             return isSearchMatchingInternal((T)component, query);
         }
@@ -28,7 +28,7 @@ public abstract class AbstractComponentSearch<T> implements ComponentSearch, Com
     }
 
     @Override
-    public Object[] getComponents(Object component) {
+    public final Object[] getComponents(Object component) {
         if(isResponsible(component)){
             return getComponentsInternal((T)component);
         }
@@ -36,7 +36,7 @@ public abstract class AbstractComponentSearch<T> implements ComponentSearch, Com
     }
 
     @Override
-    public HighlightedComponent highlight(Object component){
+    public final HighlightedComponent highlight(Object component){
         if(isResponsible(component)){
             return highlightInternal((T)component);
         }
@@ -44,7 +44,7 @@ public abstract class AbstractComponentSearch<T> implements ComponentSearch, Com
     }
 
     @Override
-    public HighlightedComponent highlightAsParent(Object component){
+    public final HighlightedComponent highlightAsParent(Object component){
         if(isResponsible(component)){
             return highlightAsParentInternal((T)component);
         }
@@ -52,14 +52,14 @@ public abstract class AbstractComponentSearch<T> implements ComponentSearch, Com
     }
 
     @Override
-    public void undoHighlight(HighlightedComponent highlightedComponent) {
+    public final void undoHighlight(HighlightedComponent highlightedComponent) {
         if(isResponsible(highlightedComponent.getComponent())){
             undoHighlightInternal(highlightedComponent, (T)highlightedComponent.getComponent());
         }
     }
 
     @Override
-    public void undoHighlightAsParent(HighlightedComponent highlightedParentComponent) {
+    public final void undoHighlightAsParent(HighlightedComponent highlightedParentComponent) {
         if(isResponsible(highlightedParentComponent.getComponent())){
             undoHighlightAsParentInternal(highlightedParentComponent, (T)highlightedParentComponent.getComponent());
         }

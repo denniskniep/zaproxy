@@ -96,20 +96,21 @@ public class TableCellElementSearch extends AbstractComponentSearch<TableCellEle
                 trySetOpaque(item, true);
                 item.setBackground(HighlighterUtils.DefaultHighlightColor);
             } else{
-                //We must reset the cells Opaque and Background
-                //ToDo: What if there is already a custom TreeCellRenderer with Background: red?
-
-
                 if(isSelected){
                     trySetOpaque(item, true);
                     item.setBackground(selectColor);
                 }else{
-                    trySetOpaque(item, false);
-                    item.setBackground(null);
+                    resetRenderer(item);
                 }
 
             }
             return item;
+        }
+
+        //ToDo: We must reset the cells Opaque and Background, but what if there is already a custom TableCellRenderer with Background: red?
+        private void resetRenderer(Component cell){
+            trySetOpaque(cell, false);
+            cell.setBackground(null);
         }
 
         private void trySetOpaque(Component item, boolean isOpaque) {
@@ -119,6 +120,10 @@ public class TableCellElementSearch extends AbstractComponentSearch<TableCellEle
         }
 
         public TableCellRenderer getOriginalColumnRenderer(){
+            if (originalColumnRenderer instanceof Component) {
+                Component originalColumnRendererAsComponent = (Component) originalColumnRenderer;
+                resetRenderer(originalColumnRendererAsComponent);
+            }
             return originalColumnRenderer;
         }
 
@@ -138,7 +143,14 @@ public class TableCellElementSearch extends AbstractComponentSearch<TableCellEle
             }
 
             String className = usedCellRenderer.getClass().getName();
-            if(usedCellRenderer == null || className.equals("javax.swing.plaf.synth.SynthTableUI$SynthTableCellRenderer")) {
+
+            if(usedCellRenderer == null ) {
+                return fallBackRenderer;
+            }
+
+            // This class can not be wrapped, because the ui would not look very well
+            // But using fallBackRenderer here has no recognizable ui impact until now.
+            if(className.equals("javax.swing.plaf.synth.SynthTableUI$SynthTableCellRenderer")) {
                 return fallBackRenderer;
             }
 

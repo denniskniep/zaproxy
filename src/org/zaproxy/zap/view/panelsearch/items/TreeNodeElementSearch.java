@@ -5,9 +5,9 @@ import org.zaproxy.zap.view.panelsearch.HighlighterUtils;
 import org.zaproxy.zap.view.panelsearch.SearchQuery;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.border.Border;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 import java.awt.Color;
 import java.awt.Component;
@@ -88,50 +88,46 @@ public class TreeNodeElementSearch extends AbstractComponentSearch<TreeNodeEleme
         @Override
         public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
             Component cell = originalCellRenderer.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+            resetRenderer(cell);
 
             if(highlightedNodes.contains(value)){
                 trySetOpaque(cell, true);
-                trySetBorder(cell, null);
                 cell.setBackground(HighlighterUtils.DefaultHighlightColor);
             }else if(highlightedParentNodes.contains(value)){
-                trySetOpaque(cell, false);
                 trySetBorder(cell, HighlighterUtils.DefaultHighlightColor);
-                cell.setBackground(null);
             }
-            else{
-                //We must reset the cells Opaque and Background
-                //ToDo: What if there is already a custom TreeCellRenderer with Background: red?
-                trySetOpaque(cell, false);
-                trySetBorder(cell, null);
-                cell.setBackground(null);
-            }
+
             return cell;
         }
 
+        //ToDo: We must reset the cells Opaque, Border and Background, but what if there is already a custom TreeCellRenderer with Background: red?
+        private void resetRenderer(Component cell){
+            trySetOpaque(cell, false);
+            trySetBorder(cell, null);
+            cell.setBackground(null);
+        }
+
         private void trySetOpaque(Component cell, boolean isOpaque) {
-            if (cell instanceof DefaultTreeCellRenderer) {
-                ((DefaultTreeCellRenderer) cell).setOpaque(isOpaque);
+            if (cell instanceof JComponent) {
+                ((JComponent) cell).setOpaque(isOpaque);
             }
         }
 
         private void trySetBorder(Component cell, Color color){
-            if (cell instanceof DefaultTreeCellRenderer) {
+            if (cell instanceof JComponent) {
                 Border border = null;
                 if(color != null){
                     border = BorderFactory.createLineBorder(color);
                 }
-                ((DefaultTreeCellRenderer) cell).setBorder(border);
+                ((JComponent) cell).setBorder(border);
             }
         }
 
         public TreeCellRenderer getOriginalCellRenderer() {
-            if (originalCellRenderer instanceof DefaultTreeCellRenderer) {
-                DefaultTreeCellRenderer originalDefaultTreeCellRenderer = (DefaultTreeCellRenderer) originalCellRenderer;
-                trySetOpaque(originalDefaultTreeCellRenderer, false);
-                trySetBorder(originalDefaultTreeCellRenderer, null);
-                originalDefaultTreeCellRenderer.setBackground(null);
+            if (originalCellRenderer instanceof Component) {
+                Component originalCellRendererAsComponent = (Component) originalCellRenderer;
+                resetRenderer(originalCellRendererAsComponent);
             }
-
             return originalCellRenderer;
         }
     }

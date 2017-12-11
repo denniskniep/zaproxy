@@ -1,6 +1,5 @@
 package org.zaproxy.zap.view.panelsearch;
 
-import javax.swing.JComponent;
 import java.awt.Color;
 
 public abstract class ComponentWithBackground {
