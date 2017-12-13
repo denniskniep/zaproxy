@@ -262,6 +262,13 @@ public class HistoryReference {
      */
     public static final int TYPE_FUZZER_TEMPORARY = 20;
 
+    /**
+     * A HTTP message received by the callback handler.
+     *
+     * @since TODO add version
+     */
+    public static final int TYPE_CALLBACK = 21;
+
    private static java.text.DecimalFormat decimalFormat = new java.text.DecimalFormat("##0.###");
 	private static TableHistory staticTableHistory = null;
 	// ZAP: Support for multiple tags
