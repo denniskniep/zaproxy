@@ -124,9 +124,17 @@ public class ExtensionCallback extends ExtensionAdaptor implements
         String hostname = ipv6 ? "[" + addr + "]" : addr;
 
         boolean isSecure = this.getCallbackParam().isSecure();
-        String scheme = isSecure ? "https" : "http";
+        String scheme = isSecure ? "https:" : "http:";
+        if(this.getCallbackParam().getNotWriteSchemeToCallbackUrl()){
+            scheme = "";
+        }
 
-        return scheme + "://" + hostname + ":" + actualPort + "/";
+        String portFragment =  ":" + actualPort;
+        if(this.getCallbackParam().getNotWritePortToCallbackUrl()){
+            portFragment = "";
+        }
+
+        return scheme + "//" + hostname + portFragment + "/";
     }
 
     private CallbackPanel getCallbackPanel() {

@@ -52,6 +52,8 @@ public class OptionsCallbackPanel extends AbstractParamPanel {
     private JCheckBox randomPort = null;
     private ZapPortNumberSpinner spinnerPort = null;
     private JCheckBox secure;
+    private JCheckBox notWritePortToCallbackUrl;
+    private JCheckBox notWriteSchemeToCallbackUrl;
 
     public OptionsCallbackPanel(ExtensionCallback ext) {
         super();
@@ -96,6 +98,28 @@ public class OptionsCallbackPanel extends AbstractParamPanel {
                     LayoutHelper.getGBC(0, ++currentRowIndex, 1, 0.5D, new Insets(2, 2, 2, 2)));
             panel.add(getSecure(),
                     LayoutHelper.getGBC(1, currentRowIndex, 1, 0.5D, new Insets(2, 2, 2, 2)));
+
+
+
+            JLabel notWritePortToCallbackUrlLabel = new JLabel(
+              Constant.messages
+                .getString("callback.options.label.notwriteporttocallbackurl"));
+            notWritePortToCallbackUrlLabel.setLabelFor(getNotWritePortToCallbackUrl());
+            panel.add(notWritePortToCallbackUrlLabel,
+              LayoutHelper.getGBC(0, ++currentRowIndex, 1, 0.5D, new Insets(2, 2, 2, 2)));
+            panel.add(getNotWritePortToCallbackUrl(),
+              LayoutHelper.getGBC(1, currentRowIndex, 1, 0.5D, new Insets(2, 2, 2, 2)));
+
+
+            JLabel notWriteSchemeToCallbackUrlLabel = new JLabel(
+              Constant.messages
+                .getString("callback.options.label.notwriteschemetocallbackurl"));
+            notWriteSchemeToCallbackUrlLabel.setLabelFor(getNotWriteSchemeToCallbackUrl());
+            panel.add(notWriteSchemeToCallbackUrlLabel,
+              LayoutHelper.getGBC(0, ++currentRowIndex, 1, 0.5D, new Insets(2, 2, 2, 2)));
+            panel.add(getNotWriteSchemeToCallbackUrl(),
+              LayoutHelper.getGBC(1, currentRowIndex, 1, 0.5D, new Insets(2, 2, 2, 2)));
+
 
 
             JLabel rndPortLabel = new JLabel(
@@ -168,6 +192,20 @@ public class OptionsCallbackPanel extends AbstractParamPanel {
         return randomPort;
     }
 
+    private JCheckBox getNotWritePortToCallbackUrl() {
+        if (notWritePortToCallbackUrl == null) {
+            notWritePortToCallbackUrl = new JCheckBox();
+        }
+        return notWritePortToCallbackUrl;
+    }
+
+    private JCheckBox getNotWriteSchemeToCallbackUrl() {
+        if (notWriteSchemeToCallbackUrl == null) {
+            notWriteSchemeToCallbackUrl = new JCheckBox();
+        }
+        return notWriteSchemeToCallbackUrl;
+    }
+
     private JCheckBox getSecure() {
         if (secure == null) {
             secure = new JCheckBox();
@@ -204,6 +242,9 @@ public class OptionsCallbackPanel extends AbstractParamPanel {
 
         secure.setSelected(proxyParam.isSecure());
 
+        notWritePortToCallbackUrl.setSelected(proxyParam.getNotWritePortToCallbackUrl());
+        notWriteSchemeToCallbackUrl.setSelected(proxyParam.getNotWriteSchemeToCallbackUrl());
+
         if (proxyParam.getPort() == 0) {
             getRandomPort().setSelected(true);
             getSpinnerPort().setEnabled(false);
@@ -228,6 +269,8 @@ public class OptionsCallbackPanel extends AbstractParamPanel {
         proxyParam.setLocalAddress((String)localAddress.getSelectedItem());
         proxyParam.setRemoteAddress((String)remoteAddress.getSelectedItem());
         proxyParam.setSecure(secure.isSelected());
+        proxyParam.setNotWritePortToCallbackUrl(notWritePortToCallbackUrl.isSelected());
+        proxyParam.setNotWriteSchemeToCallbackUrl(notWriteSchemeToCallbackUrl.isSelected());
         if (getRandomPort().isSelected()) {
             proxyParam.setPort(0);
         } else {

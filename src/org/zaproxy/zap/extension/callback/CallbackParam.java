@@ -40,10 +40,15 @@ public class CallbackParam extends AbstractParam {
 
     private static final String SECURE_KEY = PROXY_BASE_KEY + ".secure";
 
+    private static final String NOT_WRITE_PORT_KEY = PROXY_BASE_KEY + ".notwriteport";
+    private static final String NOT_WRITE_SCHEME_KEY = PROXY_BASE_KEY + ".notwritescheme";
+
     private String localAddress;
     private String remoteAddress;
     private int port;
     private boolean secure;
+    private boolean notWritePortToCallbackUrl;
+    private boolean notWriteSchemeToCallbackUrl;
 
     public CallbackParam() {
     }
@@ -54,6 +59,8 @@ public class CallbackParam extends AbstractParam {
         remoteAddress = getString(REMOTE_ADDRESS_KEY, getDefaultAddress());
         port = getInt(PORT_KEY, 0);
         secure = getBoolean(SECURE_KEY, false);
+        notWritePortToCallbackUrl = getBoolean(NOT_WRITE_PORT_KEY, false);
+        notWriteSchemeToCallbackUrl = getBoolean(NOT_WRITE_SCHEME_KEY, false);
     }
 
     private String getDefaultAddress() {
@@ -118,6 +125,30 @@ public class CallbackParam extends AbstractParam {
         }
         this.secure = secure;
         getConfig().setProperty(SECURE_KEY, Boolean.toString(this.secure));
+    }
+
+    public boolean getNotWritePortToCallbackUrl() {
+        return notWritePortToCallbackUrl;
+    }
+
+    public void setNotWritePortToCallbackUrl(boolean notWritePortToCallbackUrl) {
+        if (this.notWritePortToCallbackUrl == notWritePortToCallbackUrl) {
+            return;
+        }
+        this.notWritePortToCallbackUrl = notWritePortToCallbackUrl;
+        getConfig().setProperty(NOT_WRITE_PORT_KEY, Boolean.toString(this.notWritePortToCallbackUrl));
+    }
+
+    public boolean getNotWriteSchemeToCallbackUrl() {
+        return notWriteSchemeToCallbackUrl;
+    }
+
+    public void setNotWriteSchemeToCallbackUrl(boolean notWriteSchemeToCallbackUrl) {
+        if (this.notWriteSchemeToCallbackUrl == notWriteSchemeToCallbackUrl) {
+            return;
+        }
+        this.notWriteSchemeToCallbackUrl = notWriteSchemeToCallbackUrl;
+        getConfig().setProperty(NOT_WRITE_SCHEME_KEY, Boolean.toString(this.notWriteSchemeToCallbackUrl));
     }
 
 }
